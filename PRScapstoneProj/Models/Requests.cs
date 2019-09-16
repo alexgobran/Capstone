@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PRScapstoneProj {
     public class Requests {
@@ -27,6 +28,13 @@ namespace PRScapstoneProj {
         public double Total { get; set; } = 0;
         [Required]
         public int UserId { get; set; }
+
+
+        [ForeignKey("UserId")]
+        [InverseProperty("Request")]
+        public virtual Users User { get; set; }
+        [InverseProperty("Request")]
+        public virtual ICollection<RequestLines> RequestLine { get; set; }
 
     }
 }
