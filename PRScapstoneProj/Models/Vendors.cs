@@ -7,31 +7,34 @@ using System.Threading.Tasks;
 namespace PRScapstoneProj {
     public class Vendors {
 
+        public Vendors() { }
+
+
         public int Id { get; set; }
         [Required]
-        [StringLength(3)]
-        
+        [MaxLength(3), MinLength(3)]
+
         public string Code { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(30)]
         public string Name { get; set; }
         [Required]
-        [StringLength(100)]
+        [StringLength(30)]
         public string Address { get; set; }
         [Required]
-        [StringLength(30)]
+        [StringLength(20)]
         public string City { get; set; }
         [Required]
-        [StringLength(2)]
+        [MaxLength(2), MinLength(2)]
         public string State { get; set; }
         [Required]
-        [StringLength(5)]
+        [MaxLength(5), MinLength(5)]
         public string Zip { get; set; }
-        [Required]
-        [StringLength(13)]
+       
+        [StringLength(12)]
         public string Phone { get; set; }
-        [Required]
-        [StringLength(50)]
+       
+        [StringLength(255)]
         public string Email { get; set; }
 
     }

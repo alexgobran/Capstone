@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PRScapstoneProj {
     public class Products {
+
+        public Products() { }
+
+        public virtual Vendors Vendor { get; set; }
 
         public int Id { get; set; }
         [Required]
@@ -17,7 +22,7 @@ namespace PRScapstoneProj {
 
         public string Name { get; set; }
         [Required]
-       
+        [Column(TypeName = "decimal(11, 2)")]
         public decimal Price { get; set; }
         [Required]
 
@@ -25,7 +30,7 @@ namespace PRScapstoneProj {
         [StringLength(255)]
 
         public string PhotoPath { get; set; }
-
+        [ForeignKey("Vendor")]
         [Required]
         public int VendorId { get; set; }
     }

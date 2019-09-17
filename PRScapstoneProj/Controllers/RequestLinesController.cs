@@ -15,6 +15,17 @@ namespace PRScapstoneProj.Controllers
     public class RequestLinesController : ControllerBase
     {
         private readonly CapDBContext _context;
+        
+        public void RecalculateRequestTotal(int requestId) {
+
+             
+            var request = RequestsController.(requestId);
+            request.Total = request.RequestLine.Sum(l => l.Product.Price * l.Quantity);
+
+
+             }
+        
+       
 
         public RequestLinesController(CapDBContext context)
         {

@@ -102,5 +102,54 @@ namespace PRScapstoneProj.Controllers
         {
             return _context.Request.Any(e => e.Id == id);
         }
+        private static CapDBContext context = new CapDBContext();
+
+        public static string RequestNew = "NEW";
+        public static string RequestReview = " REVIEW";
+        public static string RequestEdit = "EDIT";
+        public static string RequestApproved = "APPROVED";
+        public static string RequestRejected = "REJECTED";
+        
+       
+        // POST: api/Requests
+        [HttpPost]
+        public void Review(int id) {
+            
+            SetStatus(id, RequestReview);
+
+        }
+        // POST: api/Requests
+        [HttpPost]
+        public void Approve(int id) {
+           
+                SetStatus(id, RequestApproved);
+            
+
+        }
+        // POST: api/Requests
+        [HttpPost]
+        public  void Reject(int id) {
+            SetStatus(id, RequestRejected);
+        }
+        // POST: api/Requests
+        [HttpPost]
+        private  void SetStatus(int id, string status) {
+            var request = GetByPK(id);
+
+        }
+        private new static List<Requests> Request = new List<Requests>();
+        public static void Main(string[] args) {
+
+            //Get: api/Employees/username/password/ 
+        [HttpPost("{Username}/{Password}")]
+        public async Task<ActionResult<Requests>> Login(string Username, string Password) {
+            var requestStatus = await _context.Request.SingleOrDefaultAsync(r => r.Username.Equals(Username) && r.Password.Equals(Password));
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return employee;
+        }
     }
-}

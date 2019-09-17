@@ -7,7 +7,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PRScapstoneProj {
+
+    
+
     public class Requests {
+    
+
+        public virtual RequestLines Request { get; set; }
+
+        public virtual Users User { get; set; }
+        public Requests() { }
+
         [Required]
         public int Id { get; set; }
         [StringLength(80)]
@@ -25,16 +35,14 @@ namespace PRScapstoneProj {
         [Required]
         public string Status { get; set; } = "NEW";
         [Required]
-        public double Total { get; set; } = 0;
+        [Column(TypeName = "decimal(11, 2)")]
+        public decimal Total { get; set; } = 0;
         [Required]
+        [ForeignKey("User")]
         public int UserId { get; set; }
 
-
-        [ForeignKey("UserId")]
-        [InverseProperty("Request")]
-        public virtual Users User { get; set; }
-        [InverseProperty("Request")]
-        public virtual ICollection<RequestLines> RequestLine { get; set; }
-
+   
+            
+    
     }
 }

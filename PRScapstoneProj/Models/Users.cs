@@ -2,35 +2,38 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PRScapstoneProj {
     public class Users {
 
+        public Users() { }
+
         public int Id { get; set; }
         [Required]
-        [StringLength(20)]
+        [StringLength(30)]
         public string Username { get; set; }
         [Required]
-        [StringLength(20)]
+        [StringLength(30)]
         public string Password { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(30)]
         public string Firstname { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(30)]
         public string Lastname { get; set; }
-        [Required]
-       [StringLength(13)]
+        
+       [StringLength(12)]
         public string Phone { get; set; }
-        [Required]
+        [StringLength(255)]
         public string  Email { get; set; }
         [Required]
         public bool IsReviewer { get; set; } = false;
         [Required]
         public bool IsAdmin { get; set; } = false;
 
-        public Users() { }
+      
     }
 }

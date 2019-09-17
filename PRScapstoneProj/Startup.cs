@@ -17,6 +17,8 @@ using PRScapstoneProj.Models;
 namespace PRScapstoneProj {
     public class Startup {
 
+        public Startup() { }
+
 
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
