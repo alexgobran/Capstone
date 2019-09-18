@@ -98,6 +98,19 @@ namespace PRScapstoneProj.Controllers
             return users;
         }
 
+        //Get: api/Employees/username/password
+        [HttpGet("{Username}/{Password}")]
+        public async Task<ActionResult<Users>> Login(string Username, string Password) {
+            var employee = await _context.User.SingleOrDefaultAsync(e => e.Username.Equals(Username) && e.Password.Equals(Password));
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return employee;
+        }
+
         private bool UsersExists(int id)
         {
             return _context.User.Any(e => e.Id == id);

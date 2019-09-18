@@ -8,30 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using PRScapstoneProj;
 using PRScapstoneProj.Models;
 
-namespace PRScapstoneProj.Controllers
-{
+namespace PRScapstoneProj.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequestsController : ControllerBase
-    {
+    public class RequestsController : ControllerBase {
         private readonly CapDBContext _context;
 
-        public RequestsController(CapDBContext context)
-        {
+        public RequestsController(CapDBContext context) {
             _context = context;
         }
 
         // GET: api/Requests
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Requests>>> GetRequest()
-        {
+        public async Task<ActionResult<IEnumerable<Requests>>> GetRequests() {
             return await _context.Request.ToListAsync();
         }
 
         // GET: api/Requests/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Requests>> GetRequests(int id)
-        {
+        public async Task<ActionResult<Requests>> GetRequest(int id) {
             var requests = await _context.Request.FindAsync(id);
 
             if (requests == null)
@@ -44,8 +39,7 @@ namespace PRScapstoneProj.Controllers
 
         // PUT: api/Requests/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRequests(int id, Requests requests)
-        {
+        public async Task<IActionResult> PutRequests(int id, Requests requests) {
             if (id != requests.Id)
             {
                 return BadRequest();
@@ -74,8 +68,7 @@ namespace PRScapstoneProj.Controllers
 
         // POST: api/Requests
         [HttpPost]
-        public async Task<ActionResult<Requests>> PostRequests(Requests requests)
-        {
+        public async Task<ActionResult<Requests>> PostRequests(Requests requests) {
             _context.Request.Add(requests);
             await _context.SaveChangesAsync();
 
@@ -84,8 +77,7 @@ namespace PRScapstoneProj.Controllers
 
         // DELETE: api/Requests/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Requests>> DeleteRequests(int id)
-        {
+        public async Task<ActionResult<Requests>> DeleteRequests(int id) {
             var requests = await _context.Request.FindAsync(id);
             if (requests == null)
             {
@@ -98,8 +90,7 @@ namespace PRScapstoneProj.Controllers
             return requests;
         }
 
-        private bool RequestsExists(int id)
-        {
+        private bool RequestsExists(int id) {
             return _context.Request.Any(e => e.Id == id);
         }
         private static CapDBContext context = new CapDBContext();
@@ -109,47 +100,77 @@ namespace PRScapstoneProj.Controllers
         public static string RequestEdit = "EDIT";
         public static string RequestApproved = "APPROVED";
         public static string RequestRejected = "REJECTED";
-        
+
+
        
-        // POST: api/Requests
-        [HttpPost]
-        public void Review(int id) {
-            
-            SetStatus(id, RequestReview);
 
-        }
-        // POST: api/Requests
-        [HttpPost]
-        public void Approve(int id) {
-           
-                SetStatus(id, RequestApproved);
-            
+        
+        //Get: api/Requests/Review
+        [HttpPut("review/{id}")]
+        public async Task<IActionResult> ReviewStatus(int id) {
+            var request = await _context.Request.FindAsync(id);
 
-        }
-        // POST: api/Requests
-        [HttpPost]
-        public  void Reject(int id) {
-            SetStatus(id, RequestRejected);
-        }
-        // POST: api/Requests
-        [HttpPost]
-        private  void SetStatus(int id, string status) {
-            var request = GetByPK(id);
 
-        }
-        private new static List<Requests> Request = new List<Requests>();
-        public static void Main(string[] args) {
 
-            //Get: api/Employees/username/password/ 
-        [HttpPost("{Username}/{Password}")]
-        public async Task<ActionResult<Requests>> Login(string Username, string Password) {
-            var requestStatus = await _context.Request.SingleOrDefaultAsync(r => r.Username.Equals(Username) && r.Password.Equals(Password));
-
-            if (employee == null)
+            if (Request == null)
             {
                 return NotFound();
             }
+            if (request.Total <= 50)
+            {
+                request.Status = RequestApproved;
+            }
+            request.Status = RequestReview;
+            _context.SaveChanges();
 
-            return employee;
+            return NoContent();
+
+
+
+        }
+        //Get: api/Requests/Approve
+        [HttpPut("approve/{id}")]
+        public async Task<IActionResult> EditStatus(int id) {
+            var request = await _context.Request.FindAsync(id);
+
+
+
+            if (Request == null)
+            {
+                return NotFound();
+            }
+            if (request.Total <= 50)
+            {
+                request.Status = RequestApproved;
+            }
+            request.Status = RequestApproved;
+            _context.SaveChanges();
+
+            return NoContent();
+
+        }
+
+        //Get: api/Requests/Reject
+
+        [HttpPut("reject/{id}")]
+        public async Task<IActionResult> RejectStatus(int id) {
+            var request = await _context.Request.FindAsync(id);
+
+
+
+            if (Request == null)
+            {
+                return NotFound();
+            }
+            if (request.Total <= 50)
+            {
+                request.Status = RequestApproved;
+            }
+            request.Status = RequestRejected;
+            _context.SaveChanges();
+
+            return NoContent();
+
         }
     }
+}

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using PRScapstoneProj;
 using PRScapstoneProj.Models;
 
+
 namespace PRScapstoneProj.Controllers
 {
     [Route("api/[controller]")]
@@ -15,21 +16,30 @@ namespace PRScapstoneProj.Controllers
     public class RequestLinesController : ControllerBase
     {
         private readonly CapDBContext _context;
-        
-        public void RecalculateRequestTotal(int requestId) {
-
-             
-            var request = RequestsController.(requestId);
-            request.Total = request.RequestLine.Sum(l => l.Product.Price * l.Quantity);
 
 
-             }
-        
+
+
+       
        
 
         public RequestLinesController(CapDBContext context)
         {
             _context = context;
+        }
+
+
+       
+        //Method to calculate Total for Each request by taking each RL for that request and multiplying the Product price by quantity
+        private void RecalculateRequestTotal(int requestid) {
+
+            var request = _context.Request.Find(requestid);
+
+            request.Total = _context.RequestLine.Where(l => l.RequestId == requestid).Sum(l => l.Product.Price * l.Quantity);
+            if (request==null)
+            { throw new Exception("Invalid RequestId"); }
+
+            _context.SaveChanges();
         }
 
         // GET: api/RequestLines
