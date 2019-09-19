@@ -101,11 +101,25 @@ namespace PRScapstoneProj.Controllers {
         public static string RequestApproved = "APPROVED";
         public static string RequestRejected = "REJECTED";
 
+        //Get: api/Requests/isAdmin
+        [HttpGet("reviewonly/{userid}")]
+        public async Task<ActionResult<IEnumerable<Requests>>> ReviewStatusOnly(int userId) {
+            var request = await _context.Request.Where(r=>r.UserId!=userId && r.Status == RequestReview).ToListAsync();
+            if (Request == null)
+            {
+                return NotFound();
+            }
+           
+            return request;
+            
+            
 
-       
 
-        
-        //Get: api/Requests/Review
+
+            
+            }
+
+        //Put: api/Requests/Review
         [HttpPut("review/{id}")]
         public async Task<IActionResult> ReviewStatus(int id) {
             var request = await _context.Request.FindAsync(id);
@@ -128,7 +142,7 @@ namespace PRScapstoneProj.Controllers {
 
 
         }
-        //Get: api/Requests/Approve
+        //Put: api/Requests/Approve
         [HttpPut("approve/{id}")]
         public async Task<IActionResult> EditStatus(int id) {
             var request = await _context.Request.FindAsync(id);
@@ -150,7 +164,7 @@ namespace PRScapstoneProj.Controllers {
 
         }
 
-        //Get: api/Requests/Reject
+        //Put: api/Requests/Reject
 
         [HttpPut("reject/{id}")]
         public async Task<IActionResult> RejectStatus(int id) {

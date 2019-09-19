@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PRScapstoneProj.Models;
 
 namespace PRScapstoneProj.Migrations
 {
     [DbContext(typeof(CapDBContext))]
-    partial class CapDBContextModelSnapshot : ModelSnapshot
+    [Migration("20190918173721_ediitedLogin")]
+    partial class ediitedLogin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

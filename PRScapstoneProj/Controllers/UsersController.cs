@@ -113,7 +113,7 @@ namespace PRScapstoneProj.Controllers
 
         private bool UsersExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.User.Any(u => u.Id == id);
         }
     }
 }
