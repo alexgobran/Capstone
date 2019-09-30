@@ -8,30 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using PRScapstoneProj;
 using PRScapstoneProj.Models;
 
-namespace PRScapstoneProj.Controllers
-{
+namespace PRScapstoneProj.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
-    {
+    public class UsersController : ControllerBase {
         private readonly CapDBContext _context;
 
-        public UsersController(CapDBContext context)
-        {
+        public UsersController(CapDBContext context) {
             _context = context;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Users>>> GetUser()
-        {
+        public async Task<ActionResult<IEnumerable<Users>>> GetUser() {
             return await _context.User.ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Users>> GetUsers(int id)
-        {
+        public async Task<ActionResult<Users>> GetUsers(int id) {
             var users = await _context.User.FindAsync(id);
 
             if (users == null)
@@ -44,8 +39,7 @@ namespace PRScapstoneProj.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsers(int id, Users users)
-        {
+        public async Task<IActionResult> PutUsers(int id, Users users) {
             if (id != users.Id)
             {
                 return BadRequest();
@@ -74,8 +68,7 @@ namespace PRScapstoneProj.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<Users>> PostUsers(Users users)
-        {
+        public async Task<ActionResult<Users>> PostUsers(Users users) {
             _context.User.Add(users);
             await _context.SaveChangesAsync();
 
@@ -84,8 +77,7 @@ namespace PRScapstoneProj.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Users>> DeleteUsers(int id)
-        {
+        public async Task<ActionResult<Users>> DeleteUsers(int id) {
             var users = await _context.User.FindAsync(id);
             if (users == null)
             {
@@ -111,9 +103,23 @@ namespace PRScapstoneProj.Controllers
             return employee;
         }
 
-        private bool UsersExists(int id)
-        {
+        private bool UsersExists(int id) {
             return _context.User.Any(u => u.Id == id);
+
         }
+        //ADMIN CAN NOT BE REVIEWER
+       //// public bool AdminOrReviewer(bool IsAdmin, bool IsReviewer) {
+       //     var admin = IsAdmin == true;
+       //     var reviewer = IsReviewer == true;
+       //     var user = _context.User.Single(a => a.Boole.Equals(IsAdmin) && a.IsReviewer.Equals(IsReviewer));
+ 
+       //     if (admin == true )
+       //     {
+       //         reviewer = false;
+       //     }
+            
+       //     return user;
+       // }
+
     }
 }

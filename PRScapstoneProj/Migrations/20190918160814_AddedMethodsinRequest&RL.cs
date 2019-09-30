@@ -100,10 +100,10 @@ namespace PRScapstoneProj.Migrations
                 nullable: false,
                 oldClrType: typeof(double));
 
-            migrationBuilder.AddColumn<int>(
-                name: "RequestId",
-                table: "Request",
-                nullable: true);
+            //migrationBuilder.AddColumn<int>(
+            //    name: "RequestId",
+            //    table: "Request",
+            //    nullable: true);
 
             migrationBuilder.CreateIndex(
                 name: "IDX_Code",
@@ -116,10 +116,10 @@ namespace PRScapstoneProj.Migrations
                 table: "RequestLine",
                 column: "ProductId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Request_RequestId",
-                table: "Request",
-                column: "RequestId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Request_RequestId",
+            //    table: "Request",
+            //    column: "RequestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Request_UserId",
@@ -145,13 +145,13 @@ namespace PRScapstoneProj.Migrations
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Request_RequestLine_RequestId",
-                table: "Request",
-                column: "RequestId",
-                principalTable: "RequestLine",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+            //migrationBuilder.AddForeignKey(
+            //    name: "FK_Request_RequestLine_RequestId",
+            //    table: "Request",
+            //    column: "RequestId",
+            //    principalTable: "RequestLine",
+            //    principalColumn: "Id",
+            //    onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Request_User_UserId",

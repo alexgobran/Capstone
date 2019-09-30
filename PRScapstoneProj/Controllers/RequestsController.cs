@@ -101,7 +101,7 @@ namespace PRScapstoneProj.Controllers {
         public static string RequestApproved = "APPROVED";
         public static string RequestRejected = "REJECTED";
 
-        //Get: api/Requests/isAdmin
+        //Get: api/Requests/ReviewOnly - not a request that you own
         [HttpGet("reviewonly/{userid}")]
         public async Task<ActionResult<IEnumerable<Requests>>> ReviewStatusOnly(int userId) {
             var request = await _context.Request.Where(r=>r.UserId!=userId && r.Status == RequestReview).ToListAsync();
