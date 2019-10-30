@@ -37,7 +37,7 @@ namespace PRScapstoneProj {
         [Required]
         [Column(TypeName = "decimal(11, 2)")]
         public decimal Total { get; set; } = 0;
-        public int UserId { get; set; }
+        public int UsersId { get; set; }
 
 
 

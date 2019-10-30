@@ -127,7 +127,7 @@ namespace PRScapstoneProj.Controllers {
         //Get: api/Requests/ReviewOnly - not a request that you own
         [HttpGet("reviewonly/{userid}")]
         public async Task<ActionResult<IEnumerable<Requests>>> ReviewStatusOnly(int userId) {
-            var request = await _context.Request.Where(r => r.UserId != userId && r.Status == RequestReview).ToListAsync();
+            var request = await _context.Request.Where(r => r.UsersId != userId && r.Status == RequestReview).ToListAsync();
             if (Request == null)
             {
                 return NotFound();

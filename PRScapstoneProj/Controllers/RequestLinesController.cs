@@ -36,7 +36,7 @@ namespace PRScapstoneProj.Controllers
 
             var request = _context.Request.Find(requestid);
 
-            request.Total = _context.RequestLine.Where(l => l.RequestId == requestid).Sum(l => l.Product.Price * l.Quantity);
+            request.Total = _context.RequestLine.Where(l => l.RequestsId == requestid).Sum(l => l.Product.Price * l.Quantity);
             if (request==null)
             { throw new Exception("Invalid RequestId"); }
 
@@ -74,7 +74,7 @@ namespace PRScapstoneProj.Controllers
             }
 
             _context.Entry(requestLines).State = EntityState.Modified;
-            RecalculateRequestTotal(requestLines.RequestId);
+            RecalculateRequestTotal(requestLines.RequestsId);
 
             try
             {
@@ -100,7 +100,7 @@ namespace PRScapstoneProj.Controllers
         public async Task<ActionResult<RequestLines>> PostRequestLines(RequestLines requestLines)
         {
             _context.RequestLine.Add(requestLines);
-            RecalculateRequestTotal(requestLines.RequestId);
+            RecalculateRequestTotal(requestLines.RequestsId);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRequestLines", new { id = requestLines.Id }, requestLines);
@@ -117,7 +117,7 @@ namespace PRScapstoneProj.Controllers
             }
 
             _context.RequestLine.Remove(requestLines);
-            RecalculateRequestTotal(requestLines.RequestId);
+            RecalculateRequestTotal(requestLines.RequestsId);
             await _context.SaveChangesAsync();
 
             return requestLines;

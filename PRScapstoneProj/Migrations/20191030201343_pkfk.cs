@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PRScapstoneProj.Migrations
 {
-    public partial class init : Migration
+    public partial class pkfk : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,14 +59,14 @@ namespace PRScapstoneProj.Migrations
                     DeliveryMode = table.Column<string>(maxLength: 20, nullable: false),
                     Status = table.Column<string>(maxLength: 10, nullable: false),
                     Total = table.Column<decimal>(type: "decimal(11, 2)", nullable: false),
-                    UserId = table.Column<int>(nullable: false)
+                    UsersId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Request", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Request_User_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Request_User_UsersId",
+                        column: x => x.UsersId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -83,14 +83,14 @@ namespace PRScapstoneProj.Migrations
                     Price = table.Column<decimal>(type: "decimal(11, 2)", nullable: false),
                     Unit = table.Column<string>(nullable: false),
                     PhotoPath = table.Column<string>(maxLength: 255, nullable: true),
-                    VendorId = table.Column<int>(nullable: false)
+                    VendorsId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Product", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_Vendor_VendorId",
-                        column: x => x.VendorId,
+                        name: "FK_Product_Vendor_VendorsId",
+                        column: x => x.VendorsId,
                         principalTable: "Vendor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -102,17 +102,16 @@ namespace PRScapstoneProj.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RequestId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    RequestsId = table.Column<int>(nullable: true)
+                    RequestsId = table.Column<int>(nullable: false),
+                    ProductsId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RequestLine", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RequestLine_Product_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_RequestLine_Product_ProductsId",
+                        column: x => x.ProductsId,
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -121,7 +120,7 @@ namespace PRScapstoneProj.Migrations
                         column: x => x.RequestsId,
                         principalTable: "Request",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -131,19 +130,19 @@ namespace PRScapstoneProj.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_VendorId",
+                name: "IX_Product_VendorsId",
                 table: "Product",
-                column: "VendorId");
+                column: "VendorsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Request_UserId",
+                name: "IX_Request_UsersId",
                 table: "Request",
-                column: "UserId");
+                column: "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RequestLine_ProductId",
+                name: "IX_RequestLine_ProductsId",
                 table: "RequestLine",
-                column: "ProductId");
+                column: "ProductsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RequestLine_RequestsId",
