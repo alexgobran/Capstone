@@ -13,15 +13,16 @@ namespace PRScapstoneProj.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequestLinesController : ControllerBase
-    {
+    public class RequestLinesController : ControllerBase {
         private readonly CapDBContext _context;
 
+        
 
 
 
-       
-       
+
+
+
 
         public RequestLinesController(CapDBContext context)
         {
@@ -31,7 +32,7 @@ namespace PRScapstoneProj.Controllers
 
        
         //Method to calculate Total for Each request by taking each RL for that request and multiplying the Product price by quantity
-        private void RecalculateRequestTotal(int requestid) {
+        private  void RecalculateRequestTotal(int requestid) {
 
             var request = _context.Request.Find(requestid);
 
@@ -73,6 +74,7 @@ namespace PRScapstoneProj.Controllers
             }
 
             _context.Entry(requestLines).State = EntityState.Modified;
+            RecalculateRequestTotal(requestLines.RequestId);
 
             try
             {
@@ -98,6 +100,7 @@ namespace PRScapstoneProj.Controllers
         public async Task<ActionResult<RequestLines>> PostRequestLines(RequestLines requestLines)
         {
             _context.RequestLine.Add(requestLines);
+            RecalculateRequestTotal(requestLines.RequestId);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRequestLines", new { id = requestLines.Id }, requestLines);
@@ -114,6 +117,7 @@ namespace PRScapstoneProj.Controllers
             }
 
             _context.RequestLine.Remove(requestLines);
+            RecalculateRequestTotal(requestLines.RequestId);
             await _context.SaveChangesAsync();
 
             return requestLines;

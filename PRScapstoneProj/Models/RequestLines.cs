@@ -17,7 +17,6 @@ namespace PRScapstoneProj {
         public int Id { get; set; } = 0;
         public int RequestId { get; set; }
         public int ProductId { get; set; }
-        [Required]
         public int Quantity { get; set; } = 1;
 
 

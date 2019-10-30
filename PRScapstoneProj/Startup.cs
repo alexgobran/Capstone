@@ -36,7 +36,7 @@ namespace PRScapstoneProj {
 
 
             });
-
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -46,7 +46,7 @@ namespace PRScapstoneProj {
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(opt => opt.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.UseMvc();
         }
     }

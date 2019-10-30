@@ -9,24 +9,27 @@ using PRScapstoneProj;
 using PRScapstoneProj.Models;
 
 namespace PRScapstoneProj.Controllers {
+
     [Route("api/[controller]")]
     [ApiController]
     public class RequestsController : ControllerBase {
+
         private readonly CapDBContext _context;
 
         public RequestsController(CapDBContext context) {
             _context = context;
         }
-
-        // GET: api/Requests
+       
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Requests>>> GetRequests() {
+        public async Task<ActionResult<IEnumerable<Requests>>> GetRequests() 
+         {
             return await _context.Request.ToListAsync();
         }
 
         // GET: api/Requests/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Requests>> GetRequest(int id) {
+
             var requests = await _context.Request.FindAsync(id);
 
             if (requests == null)
@@ -35,6 +38,26 @@ namespace PRScapstoneProj.Controllers {
             }
 
             return requests;
+        }
+        [HttpPut("review/{id}")]
+        public async Task<IActionResult> PutStatusReview(int id,Requests request) {
+
+            request.Status = "APPROVE";
+            return await PutRequests(id, request);
+        }
+
+        [HttpPut("approve/{id}")]
+        public async Task<IActionResult> PutStatusApprove(int id, Requests request) {
+
+            request.Status = "APPROVED";
+            return await PutRequests(id, request);
+        }
+
+        [HttpPut("reject/{id}")]
+        public async Task<IActionResult> PutStatusReject(int id, Requests request) {
+
+            request.Status = "REJECTED";
+            return await PutRequests(id, request);
         }
 
         // PUT: api/Requests/5
@@ -77,7 +100,7 @@ namespace PRScapstoneProj.Controllers {
 
         // DELETE: api/Requests/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Requests>> DeleteRequests(int id) {
+        public async Task<ActionResult<Requests>> DeleteRequests(int id)     {
             var requests = await _context.Request.FindAsync(id);
             if (requests == null)
             {
@@ -104,20 +127,21 @@ namespace PRScapstoneProj.Controllers {
         //Get: api/Requests/ReviewOnly - not a request that you own
         [HttpGet("reviewonly/{userid}")]
         public async Task<ActionResult<IEnumerable<Requests>>> ReviewStatusOnly(int userId) {
-            var request = await _context.Request.Where(r=>r.UserId!=userId && r.Status == RequestReview).ToListAsync();
+            var request = await _context.Request.Where(r => r.UserId != userId && r.Status == RequestReview).ToListAsync();
             if (Request == null)
             {
                 return NotFound();
             }
-           
+
             return request;
-            
-            
 
 
 
-            
-            }
+
+
+
+        }
+         
 
         //Put: api/Requests/Review
         [HttpPut("review/{id}")]
@@ -186,5 +210,18 @@ namespace PRScapstoneProj.Controllers {
             return NoContent();
 
         }
+        // static getTotal() {
+        //    //var request =  _context.Request(id);
+            
+        //    Requests.Total = _context.RequestLines;
+        //    where(l => l.RequestId == requestId)
+        //    .Sum(l => l.Product.Price * l.Quantity)
+
+        //    - context.SaveChanges();
+
+        //    return Requests.Total;
+
+        //};
+
     }
 }

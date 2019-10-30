@@ -13,7 +13,7 @@ namespace PRScapstoneProj {
     public class Requests {
     
 
-        public virtual RequestLines Request { get; set; }
+        public virtual List<RequestLines> RequestLine { get; set; }
 
         public virtual Users User { get; set; }
         public Requests() { }
@@ -37,9 +37,9 @@ namespace PRScapstoneProj {
         [Required]
         [Column(TypeName = "decimal(11, 2)")]
         public decimal Total { get; set; } = 0;
-        [Required]
-        [ForeignKey("User")]
         public int UserId { get; set; }
+
+
 
    
             

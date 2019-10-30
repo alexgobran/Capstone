@@ -29,10 +29,8 @@ namespace PRScapstoneProj {
         public string Phone { get; set; }
         [StringLength(255)]
         public string  Email { get; set; }
-        [Required]
         
         public bool IsReviewer { get; set; } = false;
-        [Required]
         public bool IsAdmin { get; set; } = false;
 
       

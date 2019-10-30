@@ -67,9 +67,13 @@ namespace PRScapstoneProj.Migrations
 
                     b.Property<int>("RequestId");
 
+                    b.Property<int?>("RequestsId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("RequestsId");
 
                     b.ToTable("RequestLine");
                 });
@@ -95,8 +99,6 @@ namespace PRScapstoneProj.Migrations
                     b.Property<string>("RejectionReason")
                         .HasMaxLength(80);
 
-                    b.Property<int?>("RequestId");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(10);
@@ -107,8 +109,6 @@ namespace PRScapstoneProj.Migrations
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RequestId");
 
                     b.HasIndex("UserId");
 
@@ -215,14 +215,14 @@ namespace PRScapstoneProj.Migrations
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PRScapstoneProj.Requests")
+                        .WithMany("RequestLine")
+                        .HasForeignKey("RequestsId");
                 });
 
             modelBuilder.Entity("PRScapstoneProj.Requests", b =>
                 {
-                    b.HasOne("PRScapstoneProj.RequestLines", "Request")
-                        .WithMany()
-                        .HasForeignKey("RequestId");
-
                     b.HasOne("PRScapstoneProj.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

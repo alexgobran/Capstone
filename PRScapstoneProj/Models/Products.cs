@@ -30,8 +30,6 @@ namespace PRScapstoneProj {
         [StringLength(255)]
 
         public string PhotoPath { get; set; }
-        [ForeignKey("Vendor")]
-        [Required]
         public int VendorId { get; set; }
     }
 
