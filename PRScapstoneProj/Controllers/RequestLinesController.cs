@@ -39,6 +39,10 @@ namespace PRScapstoneProj.Controllers
             request.Total = _context.RequestLine.Where(l => l.RequestsId == requestid).Sum(l => l.Product.Price * l.Quantity);
             if (request==null)
             { throw new Exception("Invalid RequestId"); }
+            if (request.Total <= 50)
+            {
+                request.Status = "APPROVED";
+            }
 
             _context.SaveChanges();
         }

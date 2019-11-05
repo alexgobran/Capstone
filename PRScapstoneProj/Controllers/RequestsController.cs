@@ -42,7 +42,11 @@ namespace PRScapstoneProj.Controllers {
         [HttpPut("review/{id}")]
         public async Task<IActionResult> PutStatusReview(int id,Requests request) {
 
-            request.Status = "APPROVE";
+            request.Status = "REVIEW";
+            if (request.Total <= 50)
+            {
+                request.Status = RequestApproved;
+            }
             return await PutRequests(id, request);
         }
 
@@ -92,10 +96,12 @@ namespace PRScapstoneProj.Controllers {
         // POST: api/Requests
         [HttpPost]
         public async Task<ActionResult<Requests>> PostRequests(Requests requests) {
-            _context.Request.Add(requests);
+           _context.Request.Add(requests);
+            
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRequests", new { id = requests.Id }, requests);
+
         }
 
         // DELETE: api/Requests/5
@@ -119,15 +125,15 @@ namespace PRScapstoneProj.Controllers {
         private static CapDBContext context = new CapDBContext();
 
         public static string RequestNew = "NEW";
-        public static string RequestReview = " REVIEW";
+        public static string RequestReview = "REVIEW";
         public static string RequestEdit = "EDIT";
         public static string RequestApproved = "APPROVED";
         public static string RequestRejected = "REJECTED";
 
         //Get: api/Requests/ReviewOnly - not a request that you own
-        [HttpGet("reviewonly/{userid}")]
+        [HttpGet("reviewOnly/{userid}")]
         public async Task<ActionResult<IEnumerable<Requests>>> ReviewStatusOnly(int userId) {
-            var request = await _context.Request.Where(r => r.UsersId != userId && r.Status == RequestReview).ToListAsync();
+            var request = await _context.Request.Where(r => r.UsersId!= userId && r.Status == RequestReview).ToListAsync();
             if (Request == null)
             {
                 return NotFound();
@@ -135,7 +141,7 @@ namespace PRScapstoneProj.Controllers {
 
             return request;
 
-
+            
 
 
 
@@ -144,7 +150,7 @@ namespace PRScapstoneProj.Controllers {
          
 
         //Put: api/Requests/Review
-        [HttpPut("review/{id}")]
+        [HttpPut("reviewstatus/{id}")]
         public async Task<IActionResult> ReviewStatus(int id) {
             var request = await _context.Request.FindAsync(id);
 
@@ -167,7 +173,7 @@ namespace PRScapstoneProj.Controllers {
 
         }
         //Put: api/Requests/Approve
-        [HttpPut("approve/{id}")]
+        [HttpPut("approvestatus/{id}")]
         public async Task<IActionResult> EditStatus(int id) {
             var request = await _context.Request.FindAsync(id);
 
@@ -190,7 +196,7 @@ namespace PRScapstoneProj.Controllers {
 
         //Put: api/Requests/Reject
 
-        [HttpPut("reject/{id}")]
+        [HttpPut("rejectstatus/{id}")]
         public async Task<IActionResult> RejectStatus(int id) {
             var request = await _context.Request.FindAsync(id);
 
